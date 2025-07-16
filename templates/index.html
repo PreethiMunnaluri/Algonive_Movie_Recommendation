@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineMatch</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <div class="logo">
+          <span class="icon">🎬</span>
+          <h1>CineMatch</h1>
+        </div>
+        <p>
+          Discover your next favorite movie with AI-powered recommendations.
+          Search by title, actor, mood, or describe exactly what you're looking
+          for.
+        </p>
+      </header>
+
+      <div class="search-bar">
+        <input
+          type="text"
+          id="movie-input"
+          placeholder="Search for movies, actors, genres, or describe your mood..."
+        />
+        <button class="search-button" id="search-btn">🔍 Search</button>
+      </div>
+
+      <div class="suggestions">
+        <button data-movie="The Dark Knight">
+          Action movies like The Dark Knight
+        </button>
+        <button data-movie="The Notebook">
+          Romantic films like The Notebook
+        </button>
+        <button data-movie="Inception">
+          Mind-bending films like Inception
+        </button>
+        <button data-movie="Pulp Fiction">Movies like Pulp Fiction</button>
+        <button data-movie="Toy Story">
+          Feel-good animated films like Toy Story
+        </button>
+        <button data-movie="The Shawshank Redemption">
+          Classics like Shawshank Redemption
+        </button>
+      </div>
+
+      <div class="main-buttons">
+        <button class="featured-button" id="featured-btn">
+          Explore Featured
+        </button>
+        <button class="action-button" id="action-btn">Action Movies</button>
+        <button class="romance-button" id="romance-btn">Romance Films</button>
+      </div>
+
+      <!-- Results section -->
+      <div class="results-container" id="results-container">
+        <h3 class="results-title" id="results-title">Recommendations</h3>
+        <div class="loader" id="loader"></div>
+        <ul class="movie-list" id="movie-list"></ul>
+        <div class="no-results" id="no-results"></div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        // Handle search button click
+        $("#search-btn").click(function () {
+          const query = $("#movie-input").val().trim();
+          if (query) {
+            getRecommendations(query);
+          }
+        });
+
+        // Handle suggestion buttons
+        $(".suggestions button").click(function () {
+          const movie = $(this).data("movie");
+          $("#movie-input").val(movie);
+          getRecommendations(movie);
+        });
+
+        // Handle main category buttons
+        $("#featured-btn").click(() =>
+          getRecommendations("Inception", "Featured Movies")
+        );
+        $("#action-btn").click(() =>
+          getRecommendations("The Dark Knight", "Action Movies")
+        );
+        $("#romance-btn").click(() =>
+          getRecommendations("The Notebook", "Romantic Movies")
+        );
+
+        // Handle Enter key in search input
+        $("#movie-input").keypress(function (e) {
+          if (e.which === 13) {
+            const query = $(this).val().trim();
+            if (query) {
+              getRecommendations(query);
+            }
+          }
+        });
+
+        // Function to get recommendations
+        function getRecommendations(movie, label = null) {
+          $("#results-container").show();
+          $("#movie-list").empty();
+          $("#no-results").hide();
+          $("#loader").show();
+
+          const heading = label
+            ? `Recommendations for "${label}"`
+            : `Recommendations for "${movie}"`;
+          $("#results-title").text(heading);
+
+          $.ajax({
+            type: "POST",
+            url: "/recommend",
+            data: { movie: movie },
+            success: function (response) {
+              $("#loader").hide();
+
+              if (response.status === "found") {
+                response.recommendations.forEach((title) => {
+                  $("#movie-list").append(
+                    `<li class="movie-item">${title}</li>`
+                  );
+                });
+              } else {
+                $("#no-results").show().html(`
+                <p>No exact match found for "<strong>${movie}</strong>".</p>
+                ${
+                  response.similar_titles.length
+                    ? `
+                    <p>Did you mean:</p>
+                    <ul class="movie-list">
+                    ${response.similar_titles
+                      .map(
+                        (title) =>
+                          `<li class="movie-item clickable-suggestion">${title}</li>`
+                      )
+                      .join("")}
+                    </ul>
+                `
+                    : ""
+                }
+                <p>Here are some popular picks instead:</p>
+                <ul class="movie-list">
+                    ${response.recommendations
+                      .map((title) => `<li class="movie-item">${title}</li>`)
+                      .join("")}
+                </ul>
+                `);
+
+                $(".clickable-suggestion").click(function () {
+                  const newTitle = $(this).text();
+                  $("#movie-input").val(newTitle);
+                  getRecommendations(newTitle);
+                });
+              }
+            },
+            error: function () {
+              $("#loader").hide();
+              $("#no-results")
+                .text("Error fetching recommendations. Please try again.")
+                .show();
+            },
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

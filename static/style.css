@@ -1,0 +1,239 @@
+/* body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    max-width: 1000px;
+}
+
+.card {
+    border-radius: 15px;
+    border: none;
+}
+
+h1 {
+    color: #343a40;
+    font-weight: 700;
+}
+
+.form-select {
+    height: 50px;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+    padding: 10px 25px;
+    font-size: 1.1rem;
+}
+
+.list-group-item {
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border-left: none;
+    border-right: none;
+}
+
+.list-group-item:first-child {
+    border-top: none;
+}
+
+.alert {
+    padding: 15px;
+    border-radius: 10px;
+} */
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background-color: #121212;
+        color: #ffffff;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        text-align: center;
+        max-width: 800px;
+        width: 100%;
+      }
+
+      header {
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 2em;
+        gap: 10px;
+        margin-bottom: 10px;
+      }
+
+      header p {
+        font-size: 1em;
+        color: #cccccc;
+        line-height: 1.4;
+      }
+
+      .search-bar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin: 20px 0;
+      }
+
+      .search-bar input {
+        flex: 1 1 300px;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        font-size: 1em;
+        background-color: #242424;
+        color: white;
+      }
+
+      .search-button {
+        background-color: #6a0dad;
+        color: #ffffff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1em;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .search-button:hover {
+        background-color: #8a2be2;
+      }
+
+      .suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .suggestions button {
+        background-color: #242424;
+        color: #ffffff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.95em;
+        transition: background-color 0.3s ease;
+      }
+
+      .suggestions button:hover {
+        background-color: #333333;
+      }
+
+      .main-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .main-buttons button {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: transform 0.2s ease;
+      }
+
+      .main-buttons button:hover {
+        transform: scale(1.05);
+      }
+
+      .featured-button {
+        background-color: #ffcc00;
+        color: #000;
+      }
+
+      .action-button {
+        background-color: #6a0dad;
+        color: #fff;
+      }
+
+      .romance-button {
+        background-color: #ff69b4;
+        color: #fff;
+      }
+
+      /* Results section */
+      .results-container {
+        margin-top: 30px;
+        text-align: left;
+        background-color: #1e1e1e;
+        border-radius: 10px;
+        padding: 20px;
+        display: none;
+      }
+
+      .results-title {
+        margin-bottom: 15px;
+        color: #8a2be2;
+      }
+
+      .movie-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .movie-item {
+        padding: 12px;
+        border-bottom: 1px solid #333;
+        transition: background-color 0.3s ease;
+      }
+
+      .movie-item:hover {
+        background-color: #2a2a2a;
+      }
+
+      .movie-item:last-child {
+        border-bottom: none;
+      }
+
+      .no-results {
+        color: #ff6b6b;
+        text-align: center;
+        padding: 20px;
+      }
+
+      /* Loading spinner */
+      .loader {
+        display: none;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #8a2be2;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        animation: spin 1s linear infinite;
+        margin: 20px auto;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
