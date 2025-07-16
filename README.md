@@ -18,14 +18,13 @@ An AI-powered movie recommendation web app where users can search by title, acto
 
 ## 🧪 How to Run Locally
 
-# Create a virtual environment
+### Create a virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install dependencies
+### Install dependencies
 pip install -r requirements.txt
 
-# Run the app
+### Run the app
 python app.py
-
 Then open http://127.0.0.1:5000 in your browser
